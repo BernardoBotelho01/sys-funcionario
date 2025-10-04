@@ -1,6 +1,7 @@
 module org.sysfuncionario {
     requires javafx.controls;
     requires javafx.fxml;
+    requires static lombok;
 
 
     opens org.sysfuncionario to javafx.fxml;
