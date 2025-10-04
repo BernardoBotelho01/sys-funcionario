@@ -1,9 +1,9 @@
-package org.sysfuncionario;
+package org.sysfuncionario.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class FuncionarioController {
     @FXML
     private Label welcomeText;
 

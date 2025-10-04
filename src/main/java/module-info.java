@@ -5,4 +5,6 @@ module org.sysfuncionario {
 
     opens org.sysfuncionario to javafx.fxml;
     exports org.sysfuncionario;
+    exports org.sysfuncionario.controller;
+    opens org.sysfuncionario.controller to javafx.fxml;
 }
