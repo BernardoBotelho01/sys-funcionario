@@ -4,9 +4,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Funcionario {
@@ -18,6 +18,41 @@ public class Funcionario {
     private BigDecimal salario;
     private LocalDate dataContratacao;
     private Endereco endereco;
+
+
+    public Funcionario(String matricula, String nome, String cpf,
+                       LocalDate dataNascimento, String cargo,
+                       BigDecimal salario, LocalDate dataContratacao,
+                       Endereco endereco) {
+
+        // validações sobre os parâmetros (não use this.* antes de setar)
+        if (dataNascimento == null) {
+            throw new IllegalArgumentException("Data de nascimento é obrigatória");
+        }
+        int idade = Period.between(dataNascimento, LocalDate.now()).getYears();
+        if (idade < 18) {
+            throw new IllegalArgumentException("Idade mínima é 18 anos (idade atual: " + idade + ")");
+        }
+
+        if (endereco == null) {
+            throw new IllegalArgumentException("Endereço é obrigatório");
+        }
+        String cep = endereco.getCep();
+        String cepNum = (cep == null) ? "" : cep.replaceAll("\\D", "");
+        if (cepNum.length() != 8) {
+            throw new IllegalArgumentException("CEP deve conter exatamente 8 dígitos");
+        }
+
+        // atribuições
+        this.matricula = matricula;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.cargo = cargo;
+        this.salario = salario;
+        this.dataContratacao = dataContratacao;
+        this.endereco = endereco;
+    }
 
     @Override
     public String toString() {
