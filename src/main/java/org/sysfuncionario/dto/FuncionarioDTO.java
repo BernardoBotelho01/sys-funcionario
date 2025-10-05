@@ -50,7 +50,6 @@ public record FuncionarioDTO(
         );
     }
 
-    // Regra para bloquear menores de 18 anos
     @AssertTrue(message = "Funcionário deve ter 18 anos ou mais")
     public boolean isMaiorDeIdade() {
         return dataNascimento != null &&

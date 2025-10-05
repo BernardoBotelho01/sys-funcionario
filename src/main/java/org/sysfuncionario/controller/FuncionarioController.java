@@ -17,8 +17,8 @@ import jakarta.validation.ValidatorFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;          // <<< ADICIONADO
-import javafx.util.StringConverter;                 // <<< ADICIONADO
+import java.time.format.DateTimeFormatter;
+import javafx.util.StringConverter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,8 +50,8 @@ public class FuncionarioController {
 
     private final Validator validador;
 
-    // >>> Formatter BR para datas dd/MM/yyyy <<<
-    private static final DateTimeFormatter BR = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // <<< ADICIONADO
+
+    private static final DateTimeFormatter BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public FuncionarioController() {
         ValidatorFactory fabrica = Validation.buildDefaultValidatorFactory();
@@ -67,8 +67,7 @@ public class FuncionarioController {
         );
 
         // >>> Converters para os DatePickers em dd/MM/yyyy <<<
-        StringConverter<LocalDate> conv = new StringConverter<>() {           // <<< ADICIONADO
-            @Override
+        StringConverter<LocalDate> conv = new StringConverter<>() {
             public String toString(LocalDate date) {
                 return (date == null) ? "" : BR.format(date);
             }
@@ -78,12 +77,12 @@ public class FuncionarioController {
                 return LocalDate.parse(string.trim(), BR);
             }
         };
-        dataNascimentoPicker.setConverter(conv);                               // <<< ADICIONADO
-        dataContratacaoPicker.setConverter(conv);                              // <<< ADICIONADO
-        dataNascimentoPicker.setPromptText("dd/MM/aaaa");                      // <<< ADICIONADO
-        dataContratacaoPicker.setPromptText("dd/MM/aaaa");                     // <<< ADICIONADO
+        dataNascimentoPicker.setConverter(conv);
+        dataContratacaoPicker.setConverter(conv);
+        dataNascimentoPicker.setPromptText("dd/MM/aaaa");
+        dataContratacaoPicker.setPromptText("dd/MM/aaaa");
 
-        // Colunas
+
         colMatricula.setCellValueFactory(c -> new ReadOnlyStringWrapper(valorOuVazio(c.getValue().matricula())));
         colNome.setCellValueFactory(c -> new ReadOnlyStringWrapper(valorOuVazio(c.getValue().nome())));
         colCpf.setCellValueFactory(c -> new ReadOnlyStringWrapper(valorOuVazio(c.getValue().cpf())));
@@ -91,8 +90,8 @@ public class FuncionarioController {
         colSalario.setCellValueFactory(c -> new ReadOnlyStringWrapper(
                 c.getValue().salario() == null ? "" : c.getValue().salario().toPlainString()
         ));
-        // >>> Coluna de data formatada em dd/MM/yyyy <<<
-        colDataContratacao.setCellValueFactory(c -> new ReadOnlyStringWrapper(   // <<< ALTERADO
+
+        colDataContratacao.setCellValueFactory(c -> new ReadOnlyStringWrapper(
                 c.getValue().dataContratacao() == null ? "" : BR.format(c.getValue().dataContratacao())
         ));
         colCidade.setCellValueFactory(c -> new ReadOnlyStringWrapper(
@@ -316,9 +315,9 @@ public class FuncionarioController {
         String matricula = valorOuVazio(matriculaField.getText());
         String nome = valorOuVazio(nomeField.getText());
         String cpf = valorOuVazio(cpfField.getText());
-        LocalDate dataNasc = dataNascimentoPicker.getValue();   // já vem do converter dd/MM/yyyy
+        LocalDate dataNasc = dataNascimentoPicker.getValue();
         String cargo = valorOuVazio(cargoField.getText());
-        LocalDate dataContr = dataContratacaoPicker.getValue(); // já vem do converter dd/MM/yyyy
+        LocalDate dataContr = dataContratacaoPicker.getValue();
 
         BigDecimal salario = null;
         String salTxt = valorOuVazio(salarioField.getText());
@@ -343,10 +342,10 @@ public class FuncionarioController {
         matriculaField.setText(valorOuVazio(f.matricula()));
         nomeField.setText(valorOuVazio(f.nome()));
         cpfField.setText(valorOuVazio(f.cpf()));
-        dataNascimentoPicker.setValue(f.dataNascimento());     // exibido como dd/MM/yyyy pelo converter
+        dataNascimentoPicker.setValue(f.dataNascimento());
         cargoField.setText(valorOuVazio(f.cargo()));
         salarioField.setText(f.salario() == null ? "" : f.salario().toPlainString());
-        dataContratacaoPicker.setValue(f.dataContratacao());   // exibido como dd/MM/yyyy pelo converter
+        dataContratacaoPicker.setValue(f.dataContratacao());
 
         if (f.endereco() != null) {
             logradouroField.setText(valorOuVazio(f.endereco().getLogradouro()));

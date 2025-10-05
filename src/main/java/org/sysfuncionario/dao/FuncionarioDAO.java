@@ -20,7 +20,6 @@ public class FuncionarioDAO {
     private static final String CABECALHO = "matricula;nome;cpf;dataNascimento;cargo;salario;dataContratacao;" +
             "logradouro;numero;complemento;bairro;cidade;estado;cep";
 
-    // Formatter BR para dd/MM/yyyy
     private static final DateTimeFormatter BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private void inicializarCsv() throws IOException {
@@ -34,16 +33,16 @@ public class FuncionarioDAO {
 
     public void cadastrarFuncionario(FuncionarioDTO funcionario) {
         try {
-            inicializarCsv(); // garante arquivo com cabeçalho
+            inicializarCsv();
             try (FileWriter salvarFuncionario = new FileWriter(CAMINHO_CSV, true)) {
                 salvarFuncionario.write(
                         valor(funcionario.matricula()) + ";" +
                                 valor(funcionario.nome()) + ";" +
                                 valor(funcionario.cpf()) + ";" +
-                                valorData(funcionario.dataNascimento()) + ";" +      // <<< formata dd/MM/yyyy
+                                valorData(funcionario.dataNascimento()) + ";" +
                                 valor(funcionario.cargo()) + ";" +
                                 valor(funcionario.salario()) + ";" +
-                                valorData(funcionario.dataContratacao()) + ";" +     // <<< formata dd/MM/yyyy
+                                valorData(funcionario.dataContratacao()) + ";" +
                                 valor(funcionario.endereco() != null ? funcionario.endereco().getLogradouro() : null) + ";" +
                                 valor(funcionario.endereco() != null ? funcionario.endereco().getNumero() : null) + ";" +
                                 valor(funcionario.endereco() != null ? funcionario.endereco().getComplemento() : null) + ";" +
@@ -71,7 +70,7 @@ public class FuncionarioDAO {
                 while ((linha = lerCsv.readLine()) != null) {
                     if (linha.isEmpty()) continue;
 
-                    // pula o cabeçalho
+
                     if (primeira) {
                         primeira = false;
                         if (linha.toLowerCase().startsWith("matricula;")) continue;
@@ -84,7 +83,7 @@ public class FuncionarioDAO {
                     String nome = valores[1];
                     String cpf = valores[2];
 
-                    LocalDate dataNascimento = parseData(safe(valores[3]));   // <<< lê dd/MM/yyyy
+                    LocalDate dataNascimento = parseData(safe(valores[3]));
                     String cargo = valores[4];
 
                     BigDecimal salario = null;
@@ -93,7 +92,7 @@ public class FuncionarioDAO {
                         salario = new BigDecimal(rawSalario.replace(".", "").replace(",", "."));
                     }
 
-                    LocalDate dataContratacao = parseData(safe(valores[6])); // <<< lê dd/MM/yyyy
+                    LocalDate dataContratacao = parseData(safe(valores[6]));
 
                     Endereco endereco = new Endereco();
                     endereco.setLogradouro(valores[7]);
@@ -122,7 +121,7 @@ public class FuncionarioDAO {
         List<FuncionarioDTO> funcionarios = listarFuncionarios();
 
         try {
-            inicializarCsv(); // garante arquivo
+            inicializarCsv();
             try (FileWriter excluir = new FileWriter(CAMINHO_CSV, false)) {
                 excluir.write(CABECALHO + System.lineSeparator());
 
@@ -132,10 +131,10 @@ public class FuncionarioDAO {
                                 valor(f.matricula()) + ";" +
                                         valor(f.nome()) + ";" +
                                         valor(f.cpf()) + ";" +
-                                        valorData(f.dataNascimento()) + ";" +      // <<< formata dd/MM/yyyy
+                                        valorData(f.dataNascimento()) + ";" +
                                         valor(f.cargo()) + ";" +
                                         valor(f.salario()) + ";" +
-                                        valorData(f.dataContratacao()) + ";" +     // <<< formata dd/MM/yyyy
+                                        valorData(f.dataContratacao()) + ";" +
                                         valor(f.endereco() != null ? f.endereco().getLogradouro() : null) + ";" +
                                         valor(f.endereco() != null ? f.endereco().getNumero() : null) + ";" +
                                         valor(f.endereco() != null ? f.endereco().getComplemento() : null) + ";" +
@@ -166,11 +165,11 @@ public class FuncionarioDAO {
         return o == null ? "" : o.toString();
     }
 
-    private String valorData(LocalDate d) {           // <<< novo: formata dd/MM/yyyy
+    private String valorData(LocalDate d) {
         return d == null ? "" : BR.format(d);
     }
 
-    private LocalDate parseData(String s) {           // <<< novo: lê dd/MM/yyyy
+    private LocalDate parseData(String s) {
         if (s == null || s.isEmpty()) return null;
         return LocalDate.parse(s, BR);
     }

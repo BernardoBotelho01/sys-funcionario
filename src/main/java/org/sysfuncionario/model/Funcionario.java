@@ -25,7 +25,6 @@ public class Funcionario {
                        BigDecimal salario, LocalDate dataContratacao,
                        Endereco endereco) {
 
-        // validações sobre os parâmetros (não use this.* antes de setar)
         if (dataNascimento == null) {
             throw new IllegalArgumentException("Data de nascimento é obrigatória");
         }
@@ -43,7 +42,6 @@ public class Funcionario {
             throw new IllegalArgumentException("CEP deve conter exatamente 8 dígitos");
         }
 
-        // atribuições
         this.matricula = matricula;
         this.nome = nome;
         this.cpf = cpf;
