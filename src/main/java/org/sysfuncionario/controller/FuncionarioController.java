@@ -155,7 +155,9 @@ public class FuncionarioController {
     @FXML
     public void onExcluir() {
         String mat = valorOuVazio(matriculaField.getText());
-        if (mat.isEmpty()) { definirStatus("Informe a matrícula.", true); return; }
+        if (mat.isEmpty()) { definirStatus("Informe a matrícula.", true);
+            return;
+        }
         try {
             funcionarioDao.excluirFuncionario(mat);
             definirStatus("Funcionário excluído: " + mat, false);
@@ -223,13 +225,15 @@ public class FuncionarioController {
             definirStatus("Informe um cargo para filtrar.", true);
             return;
         }
+
         var filtrados = itensTabela.stream()
-                .filter(f -> valorOuVazio(f.cargo()).toLowerCase(Locale.ROOT).contains(termo))
-                .toList();
+                .filter(f -> valorOuVazio(f.cargo()).toLowerCase().contains(termo))
+                .collect(Collectors.toList());
 
         tabelaFuncionarios.setItems(FXCollections.observableArrayList(filtrados));
         definirStatus("Filtrados por cargo (" + termo + "): " + filtrados.size(), false);
     }
+
 
     @FXML
     public void onFiltrarFaixa() {
