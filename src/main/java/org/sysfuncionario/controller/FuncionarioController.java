@@ -33,8 +33,6 @@ public class FuncionarioController {
     @FXML private TextField logradouroField, numeroField, complementoField, bairroField, cidadeField, cepField;
     @FXML private ComboBox<String> estadoCombo;
 
-    @FXML private TextField buscaField;
-
     @FXML private TextField cargoFiltroField;
     @FXML private TextField salarioMinField;
     @FXML private TextField salarioMaxField;
@@ -189,22 +187,6 @@ public class FuncionarioController {
         definirStatus("Registros: " + itensTabela.size(), false);
     }
 
-    @FXML
-    public void onBuscar() {
-        String termo = valorOuVazio(buscaField.getText()).toLowerCase(Locale.ROOT);
-        if (termo.isEmpty()) {
-            tabelaFuncionarios.setItems(itensTabela);
-            definirStatus("Busca vazia: exibindo todos.", false);
-            return;
-        }
-        var filtrados = itensTabela.stream()
-                .filter(f -> valorOuVazio(f.matricula()).toLowerCase().contains(termo)
-                        || valorOuVazio(f.nome()).toLowerCase().contains(termo)
-                        || valorOuVazio(f.cpf()).toLowerCase().contains(termo))
-                .collect(Collectors.toList());
-        tabelaFuncionarios.setItems(FXCollections.observableArrayList(filtrados));
-        definirStatus("Encontrados: " + filtrados.size(), false);
-    }
 
     @FXML
     public void onLimpar() {
