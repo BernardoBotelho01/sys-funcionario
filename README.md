@@ -1,6 +1,6 @@
 # 👷 SysFuncionario
 
-Aplicação JavaFX para cadastro e consulta de Funcionários com persistência em CSV (delimitado por ;), validação com Bean Validation (Jakarta + Hibernate Validator) e interface construída em FXML.
+Aplicação JavaFX que simula cadastros de funcionários e consulta de Funcionários com persistência em CSV, validação com Bean Validation (Jakarta + Hibernate Validator) e interface construída em FXML.
 
 ## Requisitos
 - Java 17 (JDK)
@@ -17,9 +17,11 @@ Aplicação JavaFX para cadastro e consulta de Funcionários com persistência e
 - Excluir por matrícula
 - Consultar por matrícula
 - Listar todos
+- 
 **Buscar e filtros**
   - Filtrar por cargo
   - Filtrar por faixa salarial (mínimo/máximo)
+    
 **Relatórios**
 - Média salarial por cargo
 - Agrupar por cidade
