@@ -83,16 +83,16 @@ public class FuncionarioDAO {
                     String nome = valores[1];
                     String cpf = valores[2];
 
-                    LocalDate dataNascimento = parseData(safe(valores[3]));
+                    LocalDate dataNascimento = parseData(garantirNaoNula(valores[3]));
                     String cargo = valores[4];
 
                     BigDecimal salario = null;
-                    String rawSalario = safe(valores[5]);
+                    String rawSalario = garantirNaoNula(valores[5]);
                     if (!rawSalario.isEmpty()) {
                         salario = new BigDecimal(rawSalario.replace(".", "").replace(",", "."));
                     }
 
-                    LocalDate dataContratacao = parseData(safe(valores[6]));
+                    LocalDate dataContratacao = parseData(garantirNaoNula(valores[6]));
 
                     Endereco endereco = new Endereco();
                     endereco.setLogradouro(valores[7]);
@@ -174,7 +174,7 @@ public class FuncionarioDAO {
         return LocalDate.parse(s, BR);
     }
 
-    private String safe(String s) {
+    private String garantirNaoNula(String s) {
         return s == null ? "" : s.trim();
     }
 }
